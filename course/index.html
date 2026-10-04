@@ -1160,20 +1160,32 @@ function submitForm() {
   btn.disabled = true;
   btn.textContent = 'שולח...';
 
+  var settled = false;
+  var showSuccess = function () {
+    if (settled) return;
+    settled = true;
+    document.getElementById('formContent').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  };
+  var showError = function () {
+    if (settled) return;
+    settled = true;
+    btn.disabled = false;
+    btn.textContent = originalLabel;
+    alert('אירעה שגיאה בשליחת הטופס. נא לנסות שוב או ליצור קשר בטלפון 052-2447808.');
+  };
+
+  setTimeout(function () {
+    if (!settled) showError();
+  }, 10000);
+
   fetch(REGISTRATION_ENDPOINT, {
     method: 'POST',
     mode: 'no-cors',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body: JSON.stringify({ fname, phone, email, company, role, education })
   })
-    .then(function () {
-      document.getElementById('formContent').style.display = 'none';
-      document.getElementById('formSuccess').style.display = 'block';
-    })
-    .catch(function () {
-      btn.disabled = false;
-      btn.textContent = originalLabel;
-      alert('אירעה שגיאה בשליחת הטופס. נא לנסות שוב או ליצור קשר בטלפון 052-2447808.');
-    });
+    .then(showSuccess)
+    .catch(showError);
 }
 </script>
