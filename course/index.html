@@ -526,13 +526,17 @@ section { padding: 80px 40px; }
 .details-section .section-title { color: #fff; }
 .details-grid {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
   gap: 2px;
   background: transparent;
 }
 .details-grid .detail-item {
-  flex: 0 1 150px;
+  flex: 0 1 auto;
+  min-width: 0;
+}
+.details-grid .detail-value {
+  white-space: nowrap;
 }
 .detail-item {
   text-align: center;
@@ -770,6 +774,8 @@ footer strong { color: #fff; font-weight: 600; }
   .reg-form { padding: 24px 16px; }
   .creds-bar { flex-direction: column; }
   .cred { border-left: none; border-bottom: 1px solid var(--border); }
+  .detail-item { padding: 8px 8px; }
+  .details-grid .detail-value { font-size: 1rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
